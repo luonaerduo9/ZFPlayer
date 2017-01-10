@@ -27,6 +27,9 @@
 #import "UIView+CustomControlView.h"
 #import "MMMaterialDesignSpinner.h"
 
+#import "DXCertificateView.h"
+#import "DXBuyView.h"
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
 
@@ -144,7 +147,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         // 添加子控件的约束
         [self makeSubViewsConstraints];
         
-        self.downLoadBtn.hidden     = YES;
+//        self.downLoadBtn.hidden     = YES;
         self.resolutionBtn.hidden   = YES;
         // 初始化时重置controlView
         [self zf_playerResetControlView];
@@ -807,8 +810,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 {
     if (!_downLoadBtn) {
         _downLoadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_download") forState:UIControlStateNormal];
-        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_not_download") forState:UIControlStateDisabled];
+        [_downLoadBtn setImage:ZFPlayerImage(@"Dx_share") forState:UIControlStateNormal];
+//        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_not_download") forState:UIControlStateDisabled];
         [_downLoadBtn addTarget:self action:@selector(downloadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _downLoadBtn;
@@ -982,6 +985,76 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     if (playerModel.resolutionDic) {
         [self zf_playerResolutionArray:[playerModel.resolutionDic allKeys]];
     }
+}
+
+- (void)dx_addCertificateView:(ZFPlayerModel *)playerModel {
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    DXCertificateView *certificateView = [[DXCertificateView alloc] init];
+    certificateView.placeholderImageView.image = playerModel.placeholderImage;
+    
+    [playerModel.fatherView addSubview:certificateView];
+    [certificateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsZero);
+    }];
+    
+    [certificateView addSubview:self.backBtn];
+    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(certificateView.mas_leading).offset(10);
+        make.top.equalTo(certificateView.mas_top).offset(10);
+        make.width.height.mas_equalTo(30);
+    }];
+    
+    [certificateView addSubview:self.downLoadBtn];
+    [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(30);
+        make.trailing.equalTo(certificateView.mas_trailing).offset(-10);
+        make.top.equalTo(certificateView.mas_top).offset(10);
+    }];
+    
+    __weak typeof(self) weakSelf = self;
+    [certificateView setCertificateBtnClickBlock:^{
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(dx_certificateBtnClickWithControlView:)]) {
+            [weakSelf.delegate dx_certificateBtnClickWithControlView:weakSelf];
+        }
+    }];
+}
+
+- (void)dx_addBuyView:(ZFPlayerModel *)playerModel {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    DXBuyView *buyView = [[DXBuyView alloc] init];
+    buyView.placeholderImageView.image = playerModel.placeholderImage;
+    
+    [playerModel.fatherView addSubview:buyView];
+    [buyView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsZero);
+    }];
+    
+    [buyView addSubview:self.backBtn];
+    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(buyView.mas_leading).offset(10);
+        make.top.equalTo(buyView.mas_top).offset(10);
+        make.width.height.mas_equalTo(30);
+    }];
+    
+    [buyView addSubview:self.downLoadBtn];
+    [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(30);
+        make.trailing.equalTo(buyView.mas_trailing).offset(-10);
+        make.top.equalTo(buyView.mas_top).offset(10);
+    }];
+    
+    __weak typeof(self) weakSelf = self;
+    [buyView setBuyBtnClickBlock:^{
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(dx_buyBtnClickWithControlView:)]) {
+            [weakSelf.delegate dx_buyBtnClickWithControlView:weakSelf];
+        }
+    }];
 }
 
 /** 正在播放（隐藏placeholderImageView） */
@@ -1166,7 +1239,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
  */
 - (void)zf_playerHasDownloadFunction:(BOOL)sender
 {
-    self.downLoadBtn.hidden = !sender;
+//    self.downLoadBtn.hidden = !sender;
 }
 
 /**

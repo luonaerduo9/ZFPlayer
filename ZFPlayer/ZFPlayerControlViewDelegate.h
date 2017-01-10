@@ -58,5 +58,9 @@
 - (void)zf_controlView:(UIView *)controlView progressSliderValueChanged:(UISlider *)slider;
 /** slider触摸结束 */
 - (void)zf_controlView:(UIView *)controlView progressSliderTouchEnded:(UISlider *)slider;
+/** 点击认证页面 */
+- (void)dx_certificateBtnClickWithControlView:(UIView *)controlView;
+/** 点击购买页面 */
+- (void)dx_buyBtnClickWithControlView:(UIView *)controlView;
 
 @end

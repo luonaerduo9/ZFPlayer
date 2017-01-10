@@ -149,4 +149,14 @@
  */
 - (void)zf_playerCellPlay;
 
+/**
+ 添加认证页面
+ */
+- (void)dx_addCertificateView:(ZFPlayerModel *)playerModel;
+
+/**
+ 添加购买页面
+ */
+- (void)dx_addBuyView:(ZFPlayerModel *)playerModel;
+
 @end

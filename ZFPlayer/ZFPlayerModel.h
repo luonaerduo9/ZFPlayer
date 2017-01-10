@@ -45,5 +45,9 @@
 @property (nonatomic, strong) NSIndexPath  *indexPath;
 /** 播放器View的父视图（必须指定父视图）*/
 @property (nonatomic, weak  ) UIView       *fatherView;
+/** 是否是认证 */
+@property (nonatomic, assign) BOOL isCertificate;
+/** 是否是购买 */
+@property (nonatomic, assign) BOOL isBuy;
 
 @end

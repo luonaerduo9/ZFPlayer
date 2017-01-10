@@ -54,4 +54,3 @@
 #import "UIImageView+ZFCache.h"
 #import "ZFPlayerControlViewDelegate.h"
 #import <Masonry/Masonry.h>
-#import "DXPlayerControlView.h"

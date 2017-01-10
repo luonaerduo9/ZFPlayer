@@ -455,6 +455,14 @@ typedef NS_ENUM(NSInteger, PanDirection){
             CGFloat totalTime     = (CGFloat)currentItem.duration.value / currentItem.duration.timescale;
             CGFloat value         = CMTimeGetSeconds([currentItem currentTime]) / totalTime;
             [weakSelf.controlView zf_playerCurrentTime:currentTime totalTime:totalTime sliderValue:value];
+            
+            if (weakSelf.playerModel.isBuy && currentTime >= 10) {
+                if (self.isFullScreen) {
+                    [self _fullScreenAction];
+                }
+                [self resetPlayer];
+                [self.controlView dx_addBuyView:weakSelf.playerModel];
+            }
         }
     }];
 }
@@ -752,7 +760,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)onDeviceOrientationChange
 {
-    if (!self.player) { return; }
+//    if (!self.player) { return; }
     if (ZFPlayerShared.isLockScreen) { return; }
     if (self.didEnterBackground) { return; };
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -910,6 +918,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)singleTapAction:(UIGestureRecognizer *)gesture
 {
+    
     if ([gesture isKindOfClass:[NSNumber class]] && ![(id)gesture boolValue]) {
          [self _fullScreenAction];
          return;
@@ -1337,6 +1346,11 @@ typedef NS_ENUM(NSInteger, PanDirection){
 {
     _playerModel = playerModel;
     NSCAssert(playerModel.fatherView, @"请指定playerView的faterView");
+    
+    if (playerModel.isCertificate) {
+        [self.controlView dx_addCertificateView:playerModel];
+        return;
+    }
 
     if (playerModel.seekTime) { self.seekTime = playerModel.seekTime; }
     [self.controlView zf_playerModel:playerModel];
@@ -1464,9 +1478,13 @@ typedef NS_ENUM(NSInteger, PanDirection){
 
 - (void)zf_controlView:(UIView *)controlView downloadVideoAction:(UIButton *)sender
 {
-    NSString *urlStr = self.videoURL.absoluteString;
-    if ([self.delegate respondsToSelector:@selector(zf_playerDownload:)]) {
-        [self.delegate zf_playerDownload:urlStr];
+//    NSString *urlStr = self.videoURL.absoluteString;
+//    if ([self.delegate respondsToSelector:@selector(zf_playerDownload:)]) {
+//        [self.delegate zf_playerDownload:urlStr];
+//    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dx_playerShareAction)]) {
+        [self.delegate dx_playerShareAction];
     }
 }
 
@@ -1548,6 +1566,18 @@ typedef NS_ENUM(NSInteger, PanDirection){
         //计算出拖动的当前秒数
         NSInteger dragedSeconds = floorf(total * slider.value);
         [self seekToTime:dragedSeconds completionHandler:nil];
+    }
+}
+
+- (void)dx_certificateBtnClickWithControlView:(UIView *)controlView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dx_certificateBtnClick)]) {
+        [self.delegate dx_certificateBtnClick];
+    }
+}
+
+- (void)dx_buyBtnClickWithControlView:(UIView *)controlView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dx_buyBtnClick)]) {
+        [self.delegate dx_buyBtnClick];
     }
 }
 

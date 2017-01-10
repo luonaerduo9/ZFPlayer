@@ -33,6 +33,12 @@
 - (void)zf_playerBackAction;
 /** 下载视频 */
 - (void)zf_playerDownload:(NSString *)url;
+/** 分享按钮点击 */
+- (void)dx_playerShareAction;
+/** 认证按钮点击 */
+- (void)dx_certificateBtnClick;
+/** 购买按钮点击 */
+- (void)dx_buyBtnClick;
 
 @end
 
