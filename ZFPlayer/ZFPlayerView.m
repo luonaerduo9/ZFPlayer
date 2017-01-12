@@ -463,6 +463,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
                 [self resetPlayer];
                 [self.controlView dx_addBuyView:weakSelf.playerModel];
             }
+            
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(dx_currentTime:totalTime:)]) {
+                [weakSelf.delegate dx_currentTime:currentTime totalTime:totalTime];
+            }
         }
     }];
 }

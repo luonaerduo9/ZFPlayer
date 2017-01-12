@@ -39,6 +39,8 @@
 - (void)dx_certificateBtnClick;
 /** 购买按钮点击 */
 - (void)dx_buyBtnClick;
+/** 播放中实时时间 */
+- (void)dx_currentTime:(NSInteger)currentTime totalTime:(NSInteger)totalTime;
 
 @end
 
