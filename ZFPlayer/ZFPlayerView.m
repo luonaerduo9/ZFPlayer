@@ -457,11 +457,11 @@ typedef NS_ENUM(NSInteger, PanDirection){
             [weakSelf.controlView zf_playerCurrentTime:currentTime totalTime:totalTime sliderValue:value];
             
             if (weakSelf.playerModel.isBuy && currentTime >= 180) {
-                if (self.isFullScreen) {
-                    [self _fullScreenAction];
+                if (weakSelf.isFullScreen) {
+                    [weakSelf _fullScreenAction];
                 }
-                [self resetPlayer];
-                [self.controlView dx_addBuyView:weakSelf.playerModel];
+                [weakSelf resetPlayer];
+                [weakSelf.controlView dx_addBuyView:weakSelf.playerModel];
             }
             
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(dx_currentTime:totalTime:)]) {
