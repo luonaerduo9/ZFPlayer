@@ -456,7 +456,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
             CGFloat value         = CMTimeGetSeconds([currentItem currentTime]) / totalTime;
             [weakSelf.controlView zf_playerCurrentTime:currentTime totalTime:totalTime sliderValue:value];
             
-            if (weakSelf.playerModel.isBuy && currentTime >= 120) {
+            if (weakSelf.playerModel.isBuy && currentTime >= 180) {
                 if (self.isFullScreen) {
                     [self _fullScreenAction];
                 }
