@@ -1057,6 +1057,32 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     }];
 }
 
+- (void)dx_addTryAndSeeView {
+    
+    UILabel *tryAndSeeLabel = [[UILabel alloc] init];
+    tryAndSeeLabel.font = [UIFont systemFontOfSize:12.0];
+    tryAndSeeLabel.textColor = [UIColor whiteColor];
+    tryAndSeeLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    tryAndSeeLabel.textAlignment = NSTextAlignmentCenter;
+    
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc]initWithString:@"试看3分钟, 观看完整版请购买课时"];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:248 / 255.0 green:217 / 255.0 blue:165 / 255.0 alpha:1] range:NSMakeRange(13, 4)];
+
+    tryAndSeeLabel.attributedText = attrStr;
+    
+    tryAndSeeLabel.layer.cornerRadius = 8.0;
+    tryAndSeeLabel.clipsToBounds = YES;
+    
+    [self addSubview:tryAndSeeLabel];
+    
+    [tryAndSeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(198);
+        make.height.mas_equalTo(20);
+        make.left.equalTo(self).offset(14);
+        make.bottom.equalTo(self.bottomImageView.mas_top).offset(10);
+    }];
+}
+
 /** 正在播放（隐藏placeholderImageView） */
 - (void)zf_playerItemPlaying
 {

@@ -49,5 +49,7 @@
 @property (nonatomic, assign) BOOL isCertificate;
 /** 是否是购买 */
 @property (nonatomic, assign) BOOL isBuy;
+/** 是否是试看视频 */
+@property (nonatomic, assign) BOOL isTryAndSeeVideo;
 
 @end

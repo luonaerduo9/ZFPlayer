@@ -159,4 +159,9 @@
  */
 - (void)dx_addBuyView:(ZFPlayerModel *)playerModel;
 
+/**
+ 添加试看view
+ */
+- (void)dx_addTryAndSeeView;
+
 @end
