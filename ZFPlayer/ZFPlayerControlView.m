@@ -91,6 +91,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 @property (nonatomic, strong) UIProgressView          *bottomProgressView;
 /** 分辨率的名称 */
 @property (nonatomic, strong) NSArray                 *resolutionArray;
+/** 试看三分钟Label */
+@property (nonatomic, strong) UILabel *tryAndSeeLabel;
 
 /** 播放模型 */
 @property (nonatomic, strong) ZFPlayerModel           *playerModel;
@@ -563,6 +565,13 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 }
 
+- (void)tryAndSeeLabelClick {
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dx_clickTryAndSeeLabelWithControlView:)]) {
+        [self.delegate dx_clickTryAndSeeLabelWithControlView:self];
+    }
+}
+
 #pragma mark - Private Method
 
 - (void)showControlView
@@ -910,6 +919,32 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     return _bottomProgressView;
 }
 
+- (UILabel *)tryAndSeeLabel {
+    if (_tryAndSeeLabel == nil) {
+        
+        _tryAndSeeLabel = [[UILabel alloc] init];
+        _tryAndSeeLabel.font = [UIFont systemFontOfSize:12.0];
+        _tryAndSeeLabel.textColor = [UIColor whiteColor];
+        _tryAndSeeLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        _tryAndSeeLabel.textAlignment = NSTextAlignmentCenter;
+        
+        //富文本
+        NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc]initWithString:@"试看3分钟, 观看完整版请购买课时"];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:248 / 255.0 green:217 / 255.0 blue:165 / 255.0 alpha:1] range:NSMakeRange(13, 4)];
+        _tryAndSeeLabel.attributedText = attrStr;
+        
+        //圆角
+        _tryAndSeeLabel.layer.cornerRadius = 8.0;
+        _tryAndSeeLabel.clipsToBounds = YES;
+        
+        //添加点击手势
+        _tryAndSeeLabel.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tryAndSeeLabelClick)];
+        [_tryAndSeeLabel addGestureRecognizer:tap];
+    }
+    return _tryAndSeeLabel;
+}
+
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -1058,24 +1093,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 }
 
 - (void)dx_addTryAndSeeView {
-    
-    UILabel *tryAndSeeLabel = [[UILabel alloc] init];
-    tryAndSeeLabel.font = [UIFont systemFontOfSize:12.0];
-    tryAndSeeLabel.textColor = [UIColor whiteColor];
-    tryAndSeeLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-    tryAndSeeLabel.textAlignment = NSTextAlignmentCenter;
-    
-    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc]initWithString:@"试看3分钟, 观看完整版请购买课时"];
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:248 / 255.0 green:217 / 255.0 blue:165 / 255.0 alpha:1] range:NSMakeRange(13, 4)];
 
-    tryAndSeeLabel.attributedText = attrStr;
-    
-    tryAndSeeLabel.layer.cornerRadius = 8.0;
-    tryAndSeeLabel.clipsToBounds = YES;
-    
-    [self addSubview:tryAndSeeLabel];
-    
-    [tryAndSeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self addSubview:self.tryAndSeeLabel];
+    [self.tryAndSeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(198);
         make.height.mas_equalTo(20);
         make.left.equalTo(self).offset(14);

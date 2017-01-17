@@ -62,5 +62,7 @@
 - (void)dx_certificateBtnClickWithControlView:(UIView *)controlView;
 /** 点击购买页面 */
 - (void)dx_buyBtnClickWithControlView:(UIView *)controlView;
+/** 点击试看三分钟Label */
+- (void)dx_clickTryAndSeeLabelWithControlView:(UIView *)controlView;
 
 @end

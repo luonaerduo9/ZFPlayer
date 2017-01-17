@@ -1589,6 +1589,13 @@ typedef NS_ENUM(NSInteger, PanDirection){
     }
 }
 
+- (void)dx_clickTryAndSeeLabelWithControlView:(UIView *)controlView {
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dx_clickTryAndSeeLabel)]) {
+        [self.delegate dx_clickTryAndSeeLabel];
+    }
+}
+
 #pragma clang diagnostic pop
 
 @end

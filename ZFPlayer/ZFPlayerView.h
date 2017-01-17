@@ -41,6 +41,8 @@
 - (void)dx_buyBtnClick;
 /** 播放中实时时间 */
 - (void)dx_currentTime:(NSInteger)currentTime totalTime:(NSInteger)totalTime;
+/** 试看三分钟Lable点击 */
+- (void)dx_clickTryAndSeeLabel;
 
 @end
 
