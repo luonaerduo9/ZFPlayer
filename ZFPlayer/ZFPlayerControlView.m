@@ -29,6 +29,7 @@
 
 #import "DXCertificateView.h"
 #import "DXBuyView.h"
+#import "LJContinuePlayView.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
@@ -142,7 +143,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         [self.fastView addSubview:self.fastTimeLabel];
         [self.fastView addSubview:self.fastProgressView];
         
-        [self.topImageView addSubview:self.resolutionBtn];
+//        [self.topImageView addSubview:self.resolutionBtn];
+        [self.bottomImageView addSubview:self.resolutionBtn];
+        
         [self.topImageView addSubview:self.titleLabel];
         [self addSubview:self.closeBtn];
         [self addSubview:self.bottomProgressView];
@@ -201,12 +204,12 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         make.centerY.equalTo(self.backBtn.mas_centerY);
     }];
 
-    [self.resolutionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(40);
-        make.height.mas_equalTo(25);
-        make.trailing.equalTo(self.downLoadBtn.mas_leading).offset(-10);
-        make.centerY.equalTo(self.backBtn.mas_centerY);
-    }];
+//    [self.resolutionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.width.mas_equalTo(40);
+//        make.height.mas_equalTo(25);
+//        make.trailing.equalTo(self.downLoadBtn.mas_leading).offset(-10);
+//        make.centerY.equalTo(self.backBtn.mas_centerY);
+//    }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.backBtn.mas_trailing).offset(5);
@@ -237,11 +240,21 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         make.centerY.equalTo(self.startBtn.mas_centerY);
     }];
     
+    
+    [self.resolutionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(25);
+        make.trailing.equalTo(self.fullScreenBtn.mas_leading).offset(-3);
+        make.centerY.equalTo(self.fullScreenBtn.mas_centerY);
+    }];
+    
+    
     [self.totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.equalTo(self.fullScreenBtn.mas_leading).offset(3);
+        make.trailing.equalTo(self.resolutionBtn.mas_leading).offset(3);
         make.centerY.equalTo(self.startBtn.mas_centerY);
         make.width.mas_equalTo(43);
     }];
+    
     
     [self.progressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.currentTimeLabel.mas_trailing).offset(4);
@@ -339,12 +352,15 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 {
     sender.selected = YES;
     if (sender.isSelected) {
-        sender.backgroundColor = RGBA(86, 143, 232, 1);
+//        sender.backgroundColor = RGBA(86, 143, 232, 1);
+        [sender setTitleColor:RGBA(86, 143, 232, 1) forState:UIControlStateNormal];
     } else {
-        sender.backgroundColor = [UIColor clearColor];
+//        sender.backgroundColor = [UIColor clearColor];
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
     self.resoultionCurrentBtn.selected = NO;
-    self.resoultionCurrentBtn.backgroundColor = [UIColor clearColor];
+//    self.resoultionCurrentBtn.backgroundColor = [UIColor clearColor];
+    [self.resoultionCurrentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.resoultionCurrentBtn = sender;
     // 隐藏分辨率View
     self.resolutionView.hidden  = YES;
@@ -831,7 +847,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     if (!_resolutionBtn) {
         _resolutionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _resolutionBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-        _resolutionBtn.backgroundColor = RGBA(0, 0, 0, 0.7);
+        _resolutionBtn.backgroundColor = RGBA(0, 0, 0, 0);
         [_resolutionBtn addTarget:self action:@selector(resolutionBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _resolutionBtn;
@@ -1092,6 +1108,48 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     }];
 }
 
+- (void)lj_addContinuePlayView:(ZFPlayerModel *)playerModel {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    LJContinuePlayView *continuePlayView = [[LJContinuePlayView alloc] init];
+    continuePlayView.placeholderImageView.image = playerModel.placeholderImage;
+    
+    [playerModel.fatherView addSubview:continuePlayView];
+    continuePlayView.tag = 1000;
+    
+    [continuePlayView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsZero);
+    }];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:ZFPlayerImage(@"Dx_back_full") forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [continuePlayView addSubview:backBtn];
+    [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(continuePlayView.mas_leading).offset(10);
+        make.top.equalTo(continuePlayView.mas_top).offset(10);
+        make.width.height.mas_equalTo(30);
+    }];
+    
+    UIButton *downLoadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [downLoadBtn setImage:ZFPlayerImage(@"Dx_share") forState:UIControlStateNormal];
+    //        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_not_download") forState:UIControlStateDisabled];
+    [downLoadBtn addTarget:self action:@selector(downloadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [continuePlayView addSubview:downLoadBtn];
+    [downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(30);
+        make.trailing.equalTo(continuePlayView.mas_trailing).offset(-10);
+        make.top.equalTo(continuePlayView.mas_top).offset(10);
+    }];
+    
+    __weak typeof(self) weakSelf = self;
+    [continuePlayView setContinuePlayBtnClickBlock:^{
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(lj_continuePlayBtnClickWithControlView:)]) {
+            [weakSelf.delegate lj_continuePlayBtnClickWithControlView:weakSelf];
+        }
+    }];
+}
+
 - (void)dx_addTryAndSeeView {
 
     [self addSubview:self.tryAndSeeLabel];
@@ -1300,21 +1358,22 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     // 添加分辨率按钮和分辨率下拉列表
     self.resolutionView = [[UIView alloc] init];
     self.resolutionView.hidden = YES;
-    self.resolutionView.backgroundColor = RGBA(0, 0, 0, 0.7);
+//    self.resolutionView.backgroundColor = RGBA(0, 0, 0, 0.7);
+    self.resolutionView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.resolutionView];
     
     [self.resolutionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(40);
         make.height.mas_equalTo(25*resolutionArray.count);
         make.leading.equalTo(self.resolutionBtn.mas_leading).offset(0);
-        make.top.equalTo(self.resolutionBtn.mas_bottom).offset(0);
+        make.bottom.equalTo(self.resolutionBtn.mas_top).offset(0);
     }];
     
     // 分辨率View上边的Btn
     for (NSInteger i = 0 ; i < resolutionArray.count; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.layer.borderColor = [UIColor whiteColor].CGColor;
-        btn.layer.borderWidth = 0.5;
+//        btn.layer.borderColor = [UIColor whiteColor].CGColor;
+//        btn.layer.borderWidth = 0.5;
         btn.tag = 200+i;
         btn.frame = CGRectMake(0, 25*i, 40, 25);
         btn.titleLabel.font = [UIFont systemFontOfSize:12];
@@ -1322,7 +1381,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         if (i == 0) {
             self.resoultionCurrentBtn = btn;
             btn.selected = YES;
-            btn.backgroundColor = RGBA(86, 143, 232, 1);
+//            btn.backgroundColor = RGBA(86, 143, 232, 1);
+            [btn setTitleColor:RGBA(86, 143, 232, 1) forState:UIControlStateNormal];
         }
         [self.resolutionView addSubview:btn];
         [btn addTarget:self action:@selector(changeResolution:) forControlEvents:UIControlEventTouchUpInside];

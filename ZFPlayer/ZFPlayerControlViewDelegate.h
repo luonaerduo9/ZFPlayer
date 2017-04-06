@@ -64,5 +64,7 @@
 - (void)dx_buyBtnClickWithControlView:(UIView *)controlView;
 /** 点击试看三分钟Label */
 - (void)dx_clickTryAndSeeLabelWithControlView:(UIView *)controlView;
+/** 点击继续播放按钮 */
+- (void)lj_continuePlayBtnClickWithControlView:(UIView *)controlView;
 
 @end

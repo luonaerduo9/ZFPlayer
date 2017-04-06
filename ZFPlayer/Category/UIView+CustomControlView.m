@@ -171,5 +171,9 @@
  添加试看view
  */
 - (void)dx_addTryAndSeeView {}
+/**
+ 添加网络切换view
+ */
+- (void)lj_addContinuePlayView:(ZFPlayerModel *)playerModel{}
 
 @end

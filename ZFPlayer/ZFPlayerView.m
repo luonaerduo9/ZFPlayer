@@ -470,6 +470,13 @@ typedef NS_ENUM(NSInteger, PanDirection){
         }
     }];
 }
+/**
+ * 添加在非wifi状态下的继续播放view
+ */
+- (void)addContinuePlayView {
+    [self pause];
+    [self.controlView lj_addContinuePlayView:self.playerModel];
+}
 
 /**
  *  获取系统音量
@@ -1586,6 +1593,12 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)dx_buyBtnClickWithControlView:(UIView *)controlView {
     if (self.delegate && [self.delegate respondsToSelector:@selector(dx_buyBtnClick)]) {
         [self.delegate dx_buyBtnClick];
+    }
+}
+
+- (void)lj_continuePlayBtnClickWithControlView:(UIView *)controlView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(lj_continuePlayBtnClick)]) {
+        [self.delegate lj_continuePlayBtnClick];
     }
 }
 

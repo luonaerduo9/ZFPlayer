@@ -43,6 +43,8 @@
 - (void)dx_currentTime:(NSInteger)currentTime totalTime:(NSInteger)totalTime;
 /** 试看三分钟Lable点击 */
 - (void)dx_clickTryAndSeeLabel;
+/** 继续播放按钮点击 */
+- (void)lj_continuePlayBtnClick;
 
 @end
 
@@ -121,5 +123,11 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
   * 暂停
  */
 - (void)pause;
+
+/**
+ * 添加在非wifi状态下的继续播放view
+ */
+- (void)addContinuePlayView;
+
 
 @end
