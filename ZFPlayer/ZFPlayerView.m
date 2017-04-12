@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 @property (nonatomic, strong) ZFPlayerModel          *playerModel;
 @property (nonatomic, assign) NSInteger              seekTime;
 @property (nonatomic, strong) NSURL                  *videoURL;
-@property (nonatomic, strong) NSDictionary           *resolutionDic;
+//@property (nonatomic, strong) NSDictionary           *resolutionDic;
 @end
 
 @implementation ZFPlayerView
