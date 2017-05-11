@@ -86,6 +86,8 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 /** 当cell播放视频由全屏变为小屏时候，是否回到中间位置(默认YES) */
 @property (nonatomic, assign) BOOL                    cellPlayerOnCenter;
 
+@property (nonatomic, strong) NSDictionary           *resolutionDic;
+
 /**
  *  单例，用于列表cell上多个视频
  *

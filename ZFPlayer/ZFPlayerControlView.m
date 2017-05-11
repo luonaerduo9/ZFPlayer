@@ -1048,23 +1048,43 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     certificateView.placeholderImageView.image = playerModel.placeholderImage;
     
     [playerModel.fatherView addSubview:certificateView];
+    certificateView.tag = 1002;
     [certificateView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
     
-    [certificateView addSubview:self.backBtn];
-    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:ZFPlayerImage(@"Dx_back_full") forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [certificateView addSubview:backBtn];
+    [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(certificateView.mas_leading).offset(10);
         make.top.equalTo(certificateView.mas_top).offset(10);
         make.width.height.mas_equalTo(30);
     }];
+//    [certificateView addSubview:self.backBtn];
+//    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.leading.equalTo(certificateView.mas_leading).offset(10);
+//        make.top.equalTo(certificateView.mas_top).offset(10);
+//        make.width.height.mas_equalTo(30);
+//    }];
     
-    [certificateView addSubview:self.downLoadBtn];
-    [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *downLoadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [downLoadBtn setImage:ZFPlayerImage(@"Dx_share") forState:UIControlStateNormal];
+    //        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_not_download") forState:UIControlStateDisabled];
+    [downLoadBtn addTarget:self action:@selector(downloadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [certificateView addSubview:downLoadBtn];
+    [downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(30);
         make.trailing.equalTo(certificateView.mas_trailing).offset(-10);
         make.top.equalTo(certificateView.mas_top).offset(10);
     }];
+//    [certificateView addSubview:self.downLoadBtn];
+//    [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.width.height.mas_equalTo(30);
+//        make.trailing.equalTo(certificateView.mas_trailing).offset(-10);
+//        make.top.equalTo(certificateView.mas_top).offset(10);
+//    }];
     
     __weak typeof(self) weakSelf = self;
     [certificateView setCertificateBtnClickBlock:^{
@@ -1082,23 +1102,43 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     buyView.placeholderImageView.image = playerModel.placeholderImage;
     
     [playerModel.fatherView addSubview:buyView];
+    buyView.tag = 1001;
     [buyView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
     
-    [buyView addSubview:self.backBtn];
-    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:ZFPlayerImage(@"Dx_back_full") forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [buyView addSubview:backBtn];
+    [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(buyView.mas_leading).offset(10);
         make.top.equalTo(buyView.mas_top).offset(10);
         make.width.height.mas_equalTo(30);
     }];
+//    [buyView addSubview:self.backBtn];
+//    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.leading.equalTo(buyView.mas_leading).offset(10);
+//        make.top.equalTo(buyView.mas_top).offset(10);
+//        make.width.height.mas_equalTo(30);
+//    }];
     
-    [buyView addSubview:self.downLoadBtn];
-    [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *downLoadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [downLoadBtn setImage:ZFPlayerImage(@"Dx_share") forState:UIControlStateNormal];
+    //        [_downLoadBtn setImage:ZFPlayerImage(@"ZFPlayer_not_download") forState:UIControlStateDisabled];
+    [downLoadBtn addTarget:self action:@selector(downloadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [buyView addSubview:downLoadBtn];
+    [downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(30);
         make.trailing.equalTo(buyView.mas_trailing).offset(-10);
         make.top.equalTo(buyView.mas_top).offset(10);
     }];
+//    [buyView addSubview:self.downLoadBtn];
+//    [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.width.height.mas_equalTo(30);
+//        make.trailing.equalTo(buyView.mas_trailing).offset(-10);
+//        make.top.equalTo(buyView.mas_top).offset(10);
+//    }];
     
     __weak typeof(self) weakSelf = self;
     [buyView setBuyBtnClickBlock:^{
@@ -1152,6 +1192,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 - (void)dx_addTryAndSeeView {
 
+    self.tryAndSeeLabel.tag = 1003;
     [self addSubview:self.tryAndSeeLabel];
     [self.tryAndSeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(198);
