@@ -172,6 +172,10 @@
  */
 - (void)dx_addTryAndSeeView {}
 /**
+ 去掉试看view
+ */
+- (void)lj_deleteTryAndSeeView {}
+/**
  添加网络切换view
  */
 - (void)lj_addContinuePlayView:(ZFPlayerModel *)playerModel{}

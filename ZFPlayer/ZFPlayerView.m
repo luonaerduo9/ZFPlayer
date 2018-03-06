@@ -1375,6 +1375,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
     
     if (playerModel.isTryAndSeeVideo) {
         [self.controlView dx_addTryAndSeeView];
+    } else {
+        [self.controlView lj_deleteTryAndSeeView];
     }
 }
 

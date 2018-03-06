@@ -1202,6 +1202,12 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     }];
 }
 
+- (void)lj_deleteTryAndSeeView {
+    if (self.tryAndSeeLabel) {
+        [self.tryAndSeeLabel removeFromSuperview];
+    }
+}
+
 /** 正在播放（隐藏placeholderImageView） */
 - (void)zf_playerItemPlaying
 {
