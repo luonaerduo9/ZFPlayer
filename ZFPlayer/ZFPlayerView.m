@@ -1607,6 +1607,9 @@ typedef NS_ENUM(NSInteger, PanDirection){
 - (void)dx_clickTryAndSeeLabelWithControlView:(UIView *)controlView {
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(dx_clickTryAndSeeLabel)]) {
+        if (self.isFullScreen) {
+            [self _fullScreenAction];
+        }
         [self.delegate dx_clickTryAndSeeLabel];
     }
 }
