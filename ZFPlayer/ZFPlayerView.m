@@ -1380,6 +1380,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
     }
 }
 
+- (void)lj_delTryAndSeeView {
+    [self.controlView lj_deleteTryAndSeeView];
+}
+
 #pragma mark - Getter
 
 - (AVAssetImageGenerator *)imageGenerator

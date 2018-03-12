@@ -131,5 +131,8 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
  */
 - (void)addContinuePlayView;
 
-
+/**
+ * 购买后去掉TryAndSeeView
+ */
+- (void)lj_delTryAndSeeView;
 @end
