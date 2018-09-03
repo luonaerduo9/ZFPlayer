@@ -153,7 +153,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         [self makeSubViewsConstraints];
         
 //        self.downLoadBtn.hidden     = YES;
-        self.resolutionBtn.hidden   = YES;
+//        self.resolutionBtn.hidden   = YES;
         // 初始化时重置controlView
         [self zf_playerResetControlView];
         // app退到后台
@@ -214,7 +214,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.backBtn.mas_trailing).offset(5);
         make.centerY.equalTo(self.backBtn.mas_centerY);
-        make.trailing.equalTo(self.resolutionBtn.mas_leading).offset(-10);
+//        make.trailing.equalTo(self.resolutionBtn.mas_leading).offset(-10);
+        make.width.mas_equalTo(200);
     }];
     
     [self.bottomImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -241,16 +242,16 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     }];
     
     
-//    [self.resolutionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.width.mas_equalTo(40);
-//        make.height.mas_equalTo(25);
-//        make.trailing.equalTo(self.fullScreenBtn.mas_leading).offset(-3);
-//        make.centerY.equalTo(self.fullScreenBtn.mas_centerY);
-//    }];
+    [self.resolutionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(25);
+        make.trailing.equalTo(self.fullScreenBtn.mas_leading).offset(-3);
+        make.centerY.equalTo(self.fullScreenBtn.mas_centerY);
+    }];
     
     
     [self.totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.equalTo(self.fullScreenBtn.mas_leading).offset(3);
+        make.trailing.equalTo(self.resolutionBtn.mas_leading).offset(3);
         make.centerY.equalTo(self.startBtn.mas_centerY);
         make.width.mas_equalTo(43);
     }];
@@ -1400,8 +1401,18 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 {
     self.resolutionBtn.hidden = NO;
     
+    int defaultPosition = 0;
+    for (int i=0; i<resolutionArray.count; i++) {
+        NSArray *arr = [resolutionArray[i] componentsSeparatedByString:@"-"];
+        if (arr.count>=2) {
+            if ([arr[1] isEqualToString:@"1"]) {
+                defaultPosition = i;
+            }
+        }
+    }
+    
     _resolutionArray = resolutionArray;
-    [_resolutionBtn setTitle:resolutionArray.firstObject forState:UIControlStateNormal];
+    [_resolutionBtn setTitle:[resolutionArray[defaultPosition] substringFromIndex:4] forState:UIControlStateNormal];
     // 添加分辨率按钮和分辨率下拉列表
     self.resolutionView = [[UIView alloc] init];
     self.resolutionView.hidden = YES;
@@ -1424,8 +1435,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         btn.tag = 200+i;
         btn.frame = CGRectMake(0, 25*i, 40, 25);
         btn.titleLabel.font = [UIFont systemFontOfSize:12];
-        [btn setTitle:resolutionArray[i] forState:UIControlStateNormal];
-        if (i == 0) {
+        [btn setTitle:[resolutionArray[i] substringFromIndex:4] forState:UIControlStateNormal];
+        if (i == defaultPosition) {
             self.resoultionCurrentBtn = btn;
             btn.selected = YES;
 //            btn.backgroundColor = RGBA(86, 143, 232, 1);
